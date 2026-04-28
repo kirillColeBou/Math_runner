@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="background_dark">#FF0F1923</color>
+    <color name="background_light">#FF1A2530</color>
+    <color name="accent_green">#FF00E676</color>
+    <color name="accent_green_light">#FF69F0AE</color>
+    <color name="accent_green_dark">#FF00C853</color>
+    <color name="accent_orange">#FFFF6D00</color>
+    <color name="accent_blue">#FF448AFF</color>
+    <color name="gold">#FFFFD700</color>
+    <color name="text_primary">#FFFFFFFF</color>
+    <color name="text_secondary">#FFB0BEC5</color>
+    <color name="text_on_accent">#FF0F1923</color>
+    <color name="record_bg">#FF1E3A2B</color>
+    <color name="button_bg">#FF00E676</color>
+    <color name="button_pressed">#FF00C853</color>
+    <color name="card_bg">#FF1A2530</color>
+    <color name="runner_skin">#FFFFCC80</color>
+    <color name="runner_shirt">#FFFF5252</color>
+    <color name="runner_shorts">#FF448AFF</color>
+    <color name="runner_shoe">#FFFFFFFF</color>
+    <color name="runner_hair">#FF5D4037</color>
+    <color name="road_color">#FF424242</color>
+    <color name="road_line">#FFFFEB3B</color>
 </resources>

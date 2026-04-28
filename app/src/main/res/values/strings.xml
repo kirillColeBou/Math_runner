@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Diplom</string>
+    <string name="app_name">Математический Раннер</string>
+    <string name="record_label">🏆 Рекорд</string>
+    <string name="record_value">128</string>
+    <string name="button_start">🏃 НАЧАТЬ</string>
+    <string name="nav_leaderboard">🏆 Топ игроков</string>
+    <string name="nav_settings">⚙️ Настройки</string>
+    <string name="runner_description">Бегущий человечек</string>
 </resources>

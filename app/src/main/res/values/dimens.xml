@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="padding_large">30dp</dimen>
+    <dimen name="padding_medium">20dp</dimen>
+    <dimen name="padding_small">10dp</dimen>
+    <dimen name="text_record_title">20sp</dimen>
+    <dimen name="text_record_value">28sp</dimen>
+    <dimen name="text_button">22sp</dimen>
+    <dimen name="text_nav">14sp</dimen>
+    <dimen name="runner_size">200dp</dimen>
+    <dimen name="record_border_radius">15dp</dimen>
+    <dimen name="button_radius">30dp</dimen>
+    <dimen name="icon_size">40dp</dimen>
+    <dimen name="road_height">4dp</dimen>
+    <dimen name="margin_top_record">50dp</dimen>
+    <dimen name="margin_top_runner">30dp</dimen>
+    <dimen name="margin_top_button">20dp</dimen>
+</resources>
