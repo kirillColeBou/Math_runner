@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <!-- Метка -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Сложность"
+        android:textColor="#FFFFD700"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Контейнер переключателя -->
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="48dp"
+        android:background="@drawable/swipe_track_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Левая стрелка -->
+        <TextView
+            android:id="@+id/arrow_left"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="◀"
+            android:textColor="#FF81C784"
+            android:textSize="16sp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Текущая сложность -->
+        <TextView
+            android:id="@+id/tv_difficulty"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Средняя"
+            android:textColor="#FFFFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Правая стрелка -->
+        <TextView
+            android:id="@+id/arrow_right"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="▶"
+            android:textColor="#FF81C784"
+            android:textSize="16sp"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </LinearLayout>
+
+</LinearLayout>

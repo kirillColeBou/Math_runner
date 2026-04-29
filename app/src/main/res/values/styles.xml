@@ -53,4 +53,20 @@
         <item name="android:background">@drawable/nav_icon_background</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
+    <style name="SettingsChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="chipBackgroundColor">#FF1A2530</item>
+        <item name="chipStrokeColor">#FF00C853</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">#FFB0BEC5</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipIconVisible">false</item>
+        <item name="chipStartPadding">14dp</item>
+        <item name="chipEndPadding">14dp</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="rippleColor">#2000E676</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
 </resources>

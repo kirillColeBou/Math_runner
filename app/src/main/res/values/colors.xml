@@ -22,4 +22,5 @@
     <color name="runner_hair">#FF5D4037</color>
     <color name="road_color">#FF424242</color>
     <color name="road_line">#FFFFEB3B</color>
+    <color name="surface_dark">#FF1A2530</color>
 </resources>
