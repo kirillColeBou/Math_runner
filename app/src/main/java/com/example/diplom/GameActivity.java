@@ -114,6 +114,20 @@ public class GameActivity extends AppCompatActivity {
         if (score > bestScore) {
             bestScore = score;
             prefs.edit().putInt("best_score", bestScore).apply();
+
+            // Отправляем на сервер с реальным именем
+            String playerName = PlayerManager.getPlayerName(this);
+            new ApiManager(this).saveScore(playerName, bestScore, new ApiManager.SaveCallback() {
+                @Override
+                public void onSuccess(int rank) {
+                    // Рекорд сохранён на сервере
+                }
+
+                @Override
+                public void onError(String error) {
+                    // Нет интернета — ничего страшного
+                }
+            });
         }
     }
 

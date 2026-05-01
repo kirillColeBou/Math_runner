@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         llLeaderboard.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this,
-                    "Топ игроков", Toast.LENGTH_SHORT).show();
+            showLeaderboardDialog();
         });
 
         llSettings.setOnClickListener(v -> {
@@ -86,6 +86,100 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MathRunner", MODE_PRIVATE);
         int bestScore = prefs.getInt("best_score", 0);
         tvRecord.setText(String.valueOf(bestScore));
+    }
+
+    private void showLeaderboardDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_leaderboard);
+        dialog.setCancelable(true);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    (int) (getResources().getDisplayMetrics().widthPixels * 0.92),
+                    (int) (getResources().getDisplayMetrics().heightPixels * 0.80)
+            );
+            dialog.getWindow().setGravity(android.view.Gravity.CENTER);
+        }
+
+        LinearLayout container = dialog.findViewById(R.id.container_top_players);
+        LinearLayout containerMyPlace = dialog.findViewById(R.id.container_my_place);
+        TextView tvMyRank = dialog.findViewById(R.id.tv_my_rank);
+        TextView tvMyScore = dialog.findViewById(R.id.tv_my_score);
+        View btnClose = dialog.findViewById(R.id.btn_close_leaderboard);
+
+        final int myScoreFromPrefs = getSharedPreferences("MathRunner", MODE_PRIVATE).getInt("best_score", 0);
+
+        ApiManager apiManager = new ApiManager(this);
+        apiManager.getTopPlayers(50, new ApiManager.TopCallback() {
+            @Override
+            public void onSuccess(List<ApiManager.Player> players) {
+                container.removeAllViews();
+
+                final boolean[] foundMe = {false};
+                final int[] myRank = {0};
+
+                int rank = 1;
+                String myName = PlayerManager.getPlayerName(MainActivity.this);
+                for (ApiManager.Player player : players) {
+                    View row = getLayoutInflater().inflate(R.layout.item_leaderboard, container, false);
+
+                    TextView tvRank = row.findViewById(R.id.tv_item_rank);
+                    TextView tvName = row.findViewById(R.id.tv_item_name);
+                    TextView tvScore = row.findViewById(R.id.tv_item_score);
+
+                    tvRank.setText(String.valueOf(rank));
+                    tvScore.setText(String.valueOf(player.score));
+
+                    if (player.name.equals(myName)) {
+                        foundMe[0] = true;
+                        myRank[0] = rank;
+
+                        tvName.setText("Вы");
+                        tvName.setTextColor(Color.parseColor("#FF00E676"));
+                        tvScore.setTextColor(Color.parseColor("#FF00E676"));
+                        tvRank.setTextColor(Color.parseColor("#FF00E676"));
+                    } else {
+                        tvName.setText(player.name);
+                    }
+
+                    container.addView(row);
+                    rank++;
+                }
+
+                if (!foundMe[0]) {
+                    new ApiManager(MainActivity.this).saveScore(myName, myScoreFromPrefs, new ApiManager.SaveCallback() {
+                        @Override
+                        public void onSuccess(int rank) {
+                            showMyPlace(containerMyPlace, tvMyRank, tvMyScore, rank, myScoreFromPrefs);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            showMyPlace(containerMyPlace, tvMyRank, tvMyScore, 100, myScoreFromPrefs);
+                        }
+                    });
+                } else {
+                    showMyPlace(containerMyPlace, tvMyRank, tvMyScore, myRank[0], myScoreFromPrefs);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(MainActivity.this, "Ошибка загрузки топа", Toast.LENGTH_SHORT).show();
+                showMyPlace(containerMyPlace, tvMyRank, tvMyScore, 100, myScoreFromPrefs);
+            }
+        });
+
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+        dialog.show();
+    }
+
+    private void showMyPlace(LinearLayout container, TextView tvRank, TextView tvScore, int rank, int score) {
+        container.setVisibility(View.VISIBLE);
+        tvRank.setText(String.valueOf(rank));
+        tvScore.setText(String.valueOf(score));
     }
 
     private void loadSettings() {
