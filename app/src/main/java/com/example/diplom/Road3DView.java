@@ -169,21 +169,21 @@ public class Road3DView extends View {
     }
 
     private void drawFlagOnRoad(Canvas canvas, float x, float y, String text, float roadWidth, float t) {
-        float scale = 0.5f + 0.5f * t; // Меньше вверху, больше внизу
+        float scale = 0.5f + 0.5f * t;
 
-        float flagWidth = roadWidth * 0.12f * scale;
-        float flagHeight = 55 * scale;
+        float flagWidth = roadWidth * 0.20f * scale;
+        float flagHeight = 85 * scale;
 
         // Фон
         RectF flagRect = new RectF(
                 x - flagWidth / 2, y - flagHeight / 2,
                 x + flagWidth / 2, y + flagHeight / 2
         );
-        canvas.drawRoundRect(flagRect, 8, 8, flagPaint);
-        canvas.drawRoundRect(flagRect, 8, 8, flagBorderPaint);
+        canvas.drawRoundRect(flagRect, 10, 10, flagPaint);
+        canvas.drawRoundRect(flagRect, 10, 10, flagBorderPaint);
 
         // Текст
-        float textSize = 30 * scale;
+        float textSize = 42 * scale;
         flagTextPaint.setTextSize(textSize);
         float textY = y + textSize / 3;
         canvas.drawText(text, x, textY, flagTextPaint);

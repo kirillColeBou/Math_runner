@@ -72,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
         llSettings.setOnClickListener(v -> {
             showSettingsDialog();
         });
+        updateRecordDisplay();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Обновляем рекорд при возврате из игры
+        updateRecordDisplay();
+    }
+
+    private void updateRecordDisplay() {
+        SharedPreferences prefs = getSharedPreferences("MathRunner", MODE_PRIVATE);
+        int bestScore = prefs.getInt("best_score", 0);
+        tvRecord.setText(String.valueOf(bestScore));
     }
 
     private void loadSettings() {
