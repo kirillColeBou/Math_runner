@@ -2,6 +2,7 @@ package com.example.diplom;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -59,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         btnStart.setOnClickListener(v -> {
-            Toast.makeText(MainActivity.this,
-                    "Игра запущена! 🏃", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, GameActivity.class);
+            startActivity(intent);
         });
 
         llLeaderboard.setOnClickListener(v -> {

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Тень (через path) -->
+    <path
+        android:fillColor="#40000000"
+        android:pathData="M35,110 Q60,113 85,110 Q60,114 35,110 Z" />
+
+    <!-- Левая нога -->
+    <path
+        android:fillColor="#FF1565C0"
+        android:pathData="M45,90 L55,90 L52,105 L42,105 Z" />
+
+    <!-- Левый ботинок -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M40,103 L55,103 L57,108 L38,108 Z" />
+
+    <!-- Правая нога (согнута) -->
+    <path
+        android:fillColor="#FF1565C0"
+        android:pathData="M65,88 L75,80 L78,95 L68,100 Z" />
+
+    <!-- Правый ботинок -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M72,78 L82,72 L86,80 L75,92 Z" />
+
+    <!-- Туловище -->
+    <path
+        android:fillColor="#FFFF4444"
+        android:pathData="M50,45 L70,45 L73,92 L47,92 Z" />
+
+    <!-- Номер на груди -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="1.5"
+        android:pathData="M57,60 L63,60 L63,75 L57,75 Z" />
+
+    <!-- Левая рука -->
+    <path
+        android:fillColor="#FFFFCC80"
+        android:pathData="M50,48 L38,65 L43,70 L54,55 Z" />
+
+    <!-- Правая рука -->
+    <path
+        android:fillColor="#FFFFCC80"
+        android:pathData="M70,48 L82,58 L78,66 L68,55 Z" />
+
+    <!-- Шея -->
+    <path
+        android:fillColor="#FFFFCC80"
+        android:pathData="M55,38 L65,38 L65,47 L55,47 Z" />
+
+    <!-- Голова (через path) -->
+    <path
+        android:fillColor="#FFFFCC80"
+        android:pathData="M44,30
+            C44,21 52,14 60,14
+            C68,14 76,21 76,30
+            C76,39 68,46 60,46
+            C52,46 44,39 44,30 Z" />
+
+    <!-- Волосы -->
+    <path
+        android:fillColor="#FF3E2723"
+        android:pathData="M44,28
+            C44,18 52,13 60,13
+            C68,13 76,18 76,28
+            C76,22 68,18 60,18
+            C52,18 44,22 44,28 Z" />
+
+    <!-- Левый глаз (белок) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M50,28
+            C50,26 52,24 54,24
+            C56,24 58,26 58,28
+            C58,30 56,32 54,32
+            C52,32 50,30 50,28 Z" />
+
+    <!-- Левый зрачок -->
+    <path
+        android:fillColor="#FF1A1A1A"
+        android:pathData="M53,28
+            C53,27 54,26 55,26
+            C56,26 57,27 57,28
+            C57,29 56,30 55,30
+            C54,30 53,29 53,28 Z" />
+
+    <!-- Правый глаз (белок) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M62,28
+            C62,26 64,24 66,24
+            C68,24 70,26 70,28
+            C70,30 68,32 66,32
+            C64,32 62,30 62,28 Z" />
+
+    <!-- Правый зрачок -->
+    <path
+        android:fillColor="#FF1A1A1A"
+        android:pathData="M65,28
+            C65,27 66,26 67,26
+            C68,26 69,27 69,28
+            C69,29 68,30 67,30
+            C66,30 65,29 65,28 Z" />
+
+    <!-- Улыбка -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FF3E2723"
+        android:strokeWidth="1.5"
+        android:pathData="M54,36 C57,39 63,39 66,36" />
+
+</vector>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Основной цвет дороги -->
+    <item>
+        <shape>
+            <solid android:color="#FF2E2E2E"/>
+        </shape>
+    </item>
+    <!-- Градиент для 3D эффекта (темнее к верху) -->
+    <item>
+        <shape>
+            <gradient
+                android:startColor="#FF3E3E3E"
+                android:endColor="#FF1A1A1A"
+                android:angle="90"
+                android:type="linear" />
+        </shape>
+    </item>
+    <!-- Боковая линия -->
+    <item>
+        <shape>
+            <stroke
+                android:width="2dp"
+                android:color="#FFFF5252" />
+        </shape>
+    </item>
+</layer-list>
