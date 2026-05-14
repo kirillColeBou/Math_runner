@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity {
     private MathGenerator.MathProblem currentProblem;
     private CountDownTimer questionTimer;
     private Vibrator vibrator;
-
+    private SoundManager soundManager;
     private boolean soundEnabled;
     private boolean vibrationEnabled;
     private Set<String> selectedOperations;
@@ -60,13 +60,13 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         loadSettings();
+        soundManager = new SoundManager(this);
+        soundManager.setSoundEnabled(soundEnabled);
         initViews();
         setupSwipeListener();
         startRoadAnimation();
 
         mathGenerator = new MathGenerator(difficulty, selectedOperations);
-
-        // Инициализация вибратора
         try {
             VibratorManager vm = (VibratorManager) getSystemService(VIBRATOR_MANAGER_SERVICE);
             if (vm != null) {
@@ -83,12 +83,8 @@ public class GameActivity extends AppCompatActivity {
             if (isWaitingForAnswer) onAnswerChosen(false);
         });
         btnPause.setOnClickListener(v -> showPauseDialog());
-
-        // Очищаем заглушки и ждём 5 секунд
         tvQuestion.setText("");
         road3DView.setAnswers("", "");
-
-        // Запускаем первый пример через 5 секунд
         showNextQuestion();
     }
 
@@ -114,19 +110,13 @@ public class GameActivity extends AppCompatActivity {
         if (score > bestScore) {
             bestScore = score;
             prefs.edit().putInt("best_score", bestScore).apply();
-
-            // Отправляем на сервер с реальным именем
             String playerName = PlayerManager.getPlayerName(this);
             new ApiManager(this).saveScore(playerName, bestScore, new ApiManager.SaveCallback() {
                 @Override
-                public void onSuccess(int rank) {
-                    // Рекорд сохранён на сервере
-                }
+                public void onSuccess(int rank) { }
 
                 @Override
-                public void onError(String error) {
-                    // Нет интернета — ничего страшного
-                }
+                public void onError(String error) { }
             });
         }
     }
@@ -156,15 +146,12 @@ public class GameActivity extends AppCompatActivity {
 
     private void showNextQuestion() {
         if (isPaused) return;
-
-        // Генерируем новый пример
         mathGenerator = new MathGenerator(difficulty, selectedOperations);
         currentProblem = mathGenerator.generate();
 
         tvQuestion.setText(currentProblem.question);
         road3DView.setAnswers(currentProblem.leftAnswer, currentProblem.rightAnswer);
 
-        // Возвращаем персонажа в центр
         moveRunnerToCenter();
         isWaitingForAnswer = true;
 
@@ -213,6 +200,9 @@ public class GameActivity extends AppCompatActivity {
         tvScore.setText(String.valueOf(score));
 
         safeVibrate(100);
+        if (soundManager != null) {
+            soundManager.playCorrect();
+        }
 
         questionsAnswered++;
         updateDifficulty();
@@ -224,8 +214,10 @@ public class GameActivity extends AppCompatActivity {
         saveBestScore();
 
         safeVibrate(new long[]{0, 100, 100, 200});
+        if (soundManager != null) {
+            soundManager.playWrong();
+        }
 
-        // Останавливаем игру и показываем окно проигрыша
         if (stripeAnimator != null) stripeAnimator.pause();
         if (questionTimer != null) questionTimer.cancel();
         isPaused = true;
@@ -471,6 +463,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         saveBestScore();
+        if (soundManager != null) {
+            soundManager.release();
+        }
         if (stripeAnimator != null) stripeAnimator.cancel();
         if (questionTimer != null) questionTimer.cancel();
     }

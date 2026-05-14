@@ -5,7 +5,6 @@
     android:background="#FF0D1B2A"
     android:orientation="vertical">
 
-    <!-- Верхняя панель -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

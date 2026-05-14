@@ -5,7 +5,6 @@
     android:background="#FF0F1923"
     android:orientation="vertical">
 
-    <!-- Верхняя часть с рекордом -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +36,6 @@
 
     </LinearLayout>
 
-    <!-- Центральная часть с персонажем -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -45,8 +43,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <!-- Персонаж -->
-        <!-- Вместо ImageView можно использовать TextView -->
         <TextView
             android:id="@+id/tv_runner"
             android:layout_width="wrap_content"
@@ -55,7 +51,6 @@
             android:textSize="120sp"
             android:gravity="center" />
 
-        <!-- Кнопка НАЧАТЬ -->
         <TextView
             android:id="@+id/btn_start"
             android:layout_width="wrap_content"

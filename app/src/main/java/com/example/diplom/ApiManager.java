@@ -23,7 +23,6 @@ public class ApiManager {
     public void getTopPlayers(int limit, TopCallback callback) {
         String url = BASE_URL + "get_top.php?limit=" + limit;
         Log.d(TAG, "Request URL: " + url);
-
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     Log.d(TAG, "Response: " + response.toString());

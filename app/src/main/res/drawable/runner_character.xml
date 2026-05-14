@@ -5,7 +5,7 @@
     android:viewportWidth="120"
     android:viewportHeight="120">
 
-    <!-- Тень (через path) -->
+    <!-- Тень -->
     <path
         android:fillColor="#40000000"
         android:pathData="M35,110 Q60,113 85,110 Q60,114 35,110 Z" />
@@ -20,7 +20,7 @@
         android:fillColor="#FFFFFFFF"
         android:pathData="M40,103 L55,103 L57,108 L38,108 Z" />
 
-    <!-- Правая нога (согнута) -->
+    <!-- Правая нога -->
     <path
         android:fillColor="#FF1565C0"
         android:pathData="M65,88 L75,80 L78,95 L68,100 Z" />
