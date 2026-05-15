@@ -54,6 +54,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean vibrationEnabled;
     private Set<String> selectedOperations;
     private String difficulty;
+    private long remainingTimeMs = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +147,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showNextQuestion() {
+        remainingTimeMs = 0;
         if (isPaused) return;
         mathGenerator = new MathGenerator(difficulty, selectedOperations);
         currentProblem = mathGenerator.generate();
@@ -167,16 +169,21 @@ public class GameActivity extends AppCompatActivity {
             questionTimer.cancel();
         }
 
-        Log.d("GameActivity", "Таймер запущен на " + timePerQuestion + " секунд");
+        final long totalTime = remainingTimeMs > 0 ? remainingTimeMs : timePerQuestion * 1000;
+        remainingTimeMs = 0;
 
-        questionTimer = new CountDownTimer(timePerQuestion * 1000, 1000) {
+        Log.d("GameActivity", "Таймер запущен на " + totalTime / 1000 + " секунд");
+
+        questionTimer = new CountDownTimer(totalTime, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                remainingTimeMs = millisUntilFinished;
                 Log.d("GameActivity", "Таймер: осталось " + millisUntilFinished / 1000 + " сек");
             }
 
             @Override
             public void onFinish() {
+                remainingTimeMs = 0;
                 Log.d("GameActivity", "Таймер истек! Вызываю проигрыш");
                 isWaitingForAnswer = false;
                 onWrongAnswer();

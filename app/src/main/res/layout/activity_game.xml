@@ -85,7 +85,6 @@
     </LinearLayout>
 
     <!-- Пример -->
-    <!-- Пример -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -108,6 +107,17 @@
                 android:textColor="#FFFFFFFF"
                 android:textSize="34sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_cheat_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHEAT"
+                android:textColor="#FFFFD700"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:visibility="gone" />
 
         </LinearLayout>
 
