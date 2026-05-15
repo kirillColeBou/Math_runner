@@ -83,18 +83,23 @@ public class Road3DView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
         int w = getWidth();
         int h = getHeight();
+
         float topY = h * 0.45f;
         float bottomY = h * 0.85f;
         float vanishX = w / 2f;
-        float vanishY = h * 0.2f;
+
         float topWidth = w * 0.06f;
         float bottomWidth = w * 0.95f;
+
         float leftTop = vanishX - topWidth / 2;
         float rightTop = vanishX + topWidth / 2;
         float leftBottom = vanishX - bottomWidth / 2;
         float rightBottom = vanishX + bottomWidth / 2;
+
+        // Рисуем дорогу
         Path roadPath = new Path();
         roadPath.moveTo(leftTop, topY);
         roadPath.lineTo(rightTop, topY);
@@ -102,41 +107,33 @@ public class Road3DView extends View {
         roadPath.lineTo(leftBottom, bottomY);
         roadPath.close();
         canvas.drawPath(roadPath, roadPaint);
+
+        // Боковые линии
         canvas.drawLine(leftTop, topY, leftBottom, bottomY, edgePaint);
         canvas.drawLine(rightTop, topY, rightBottom, bottomY, edgePaint);
+
+        // Центральная линия
         canvas.drawLine(vanishX, topY, vanishX, bottomY, centerLinePaint);
-        int numStripes = 8;
-        for (int i = 0; i < numStripes; i++) {
-            float baseY = topY + (i * (bottomY - topY) / numStripes) + stripeOffset;
-            while (baseY > bottomY) baseY -= (bottomY - topY);
-            while (baseY < topY) baseY += (bottomY - topY);
-            float t = (baseY - topY) / (bottomY - topY);
-            float currentWidth = topWidth + (bottomWidth - topWidth) * t;
-            float halfWidth = currentWidth / 2;
-            float leftX = vanishX - halfWidth * 0.5f;
-            float stripeW = 8 + 12 * t;
-            float stripeH = 6 + 10 * t;
-            RectF leftStripe = new RectF(
-                    leftX - stripeW / 2, baseY - stripeH / 2,
-                    leftX + stripeW / 2, baseY + stripeH / 2
-            );
-            canvas.drawRect(leftStripe, stripePaint);
-            float rightX = vanishX + halfWidth * 0.5f;
-            RectF rightStripe = new RectF(
-                    rightX - stripeW / 2, baseY - stripeH / 2,
-                    rightX + stripeW / 2, baseY + stripeH / 2
-            );
-            canvas.drawRect(rightStripe, stripePaint);
-        }
-        float flagY = topY + stripeOffset;
-        while (flagY > bottomY + 100) flagY -= (bottomY - topY);
-        while (flagY < topY - 100) flagY += (bottomY - topY);
-        float flagT = (flagY - topY) / (bottomY - topY);
-        flagT = Math.max(0, Math.min(1, flagT));
+
+        // Линия проигрыша (красная, внизу)
+        Paint loseLine = new Paint();
+        loseLine.setColor(Color.parseColor("#FFFF5252"));
+        loseLine.setStrokeWidth(4);
+        loseLine.setAntiAlias(true);
+        canvas.drawLine(leftBottom, bottomY, rightBottom, bottomY, loseLine);
+
+        // Плашки с ответами — одна позиция от 0 (верх) до 1 (низ)
+        float flagT = stripeOffset; // 0 = верх, 1 = низ
+        flagT = Math.max(0, Math.min(1, flagT)); // Ограничиваем 0..1
+
+        float flagY = topY + flagT * (bottomY - topY);
         float flagRoadWidth = topWidth + (bottomWidth - topWidth) * flagT;
-        float flagHalfWidth = flagRoadWidth / 2;
+
+        // Левый флажок
         float leftFlagX = vanishX - flagRoadWidth * 0.28f;
         drawFlagOnRoad(canvas, leftFlagX, flagY, leftAnswer, flagRoadWidth, flagT);
+
+        // Правый флажок
         float rightFlagX = vanishX + flagRoadWidth * 0.28f;
         drawFlagOnRoad(canvas, rightFlagX, flagY, rightAnswer, flagRoadWidth, flagT);
     }

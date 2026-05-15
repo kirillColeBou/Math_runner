@@ -13,6 +13,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.os.VibratorManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -155,18 +156,28 @@ public class GameActivity extends AppCompatActivity {
         moveRunnerToCenter();
         isWaitingForAnswer = true;
 
+        if (stripeAnimator != null) stripeAnimator.cancel();
+        startRoadAnimation();
+
         startQuestionTimer();
     }
 
     private void startQuestionTimer() {
-        if (questionTimer != null) questionTimer.cancel();
+        if (questionTimer != null) {
+            questionTimer.cancel();
+        }
+
+        Log.d("GameActivity", "Таймер запущен на " + timePerQuestion + " секунд");
 
         questionTimer = new CountDownTimer(timePerQuestion * 1000, 1000) {
             @Override
-            public void onTick(long millisUntilFinished) {}
+            public void onTick(long millisUntilFinished) {
+                Log.d("GameActivity", "Таймер: осталось " + millisUntilFinished / 1000 + " сек");
+            }
 
             @Override
             public void onFinish() {
+                Log.d("GameActivity", "Таймер истек! Вызываю проигрыш");
                 isWaitingForAnswer = false;
                 onWrongAnswer();
             }
@@ -218,18 +229,26 @@ public class GameActivity extends AppCompatActivity {
             soundManager.playWrong();
         }
 
-        if (stripeAnimator != null) stripeAnimator.pause();
-        if (questionTimer != null) questionTimer.cancel();
+        if (stripeAnimator != null) {
+            stripeAnimator.pause();
+        }
+        if (questionTimer != null) {
+            questionTimer.cancel();
+        }
         isPaused = true;
+        isWaitingForAnswer = false;
+        isMoving = false;
 
         showGameOverDialog();
     }
 
     private void showGameOverDialog() {
+        isPaused = true;
+        isWaitingForAnswer = false;
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_game_over);
-        dialog.setCancelable(false);
+        dialog.setCancelable(false); // Нельзя закрыть кнопкой назад
 
         if (dialog.getWindow() != null) {
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -347,9 +366,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void startRoadAnimation() {
-        stripeAnimator = ValueAnimator.ofFloat(0f, 500f);
-        stripeAnimator.setDuration(3000);
-        stripeAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        stripeAnimator = ValueAnimator.ofFloat(0f, 1f);
+        stripeAnimator.setDuration(timePerQuestion * 1000);
         stripeAnimator.setInterpolator(null);
         stripeAnimator.addUpdateListener(animation -> {
             float value = (float) animation.getAnimatedValue();
@@ -369,6 +387,10 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void resumeGame() {
+        if (isWaitingForAnswer == false && isPaused == true && score == 0 && questionsAnswered == 0) {
+            return;
+        }
+
         if (stripeAnimator != null && stripeAnimator.isPaused()) {
             stripeAnimator.resume();
         }
@@ -445,7 +467,7 @@ public class GameActivity extends AppCompatActivity {
                         float diff = endX - startX;
 
                         if (Math.abs(diff) > 50) {
-                            onAnswerChosen(diff > 0);
+                            onAnswerChosen(diff < 0);
                         }
                         return true;
                 }
